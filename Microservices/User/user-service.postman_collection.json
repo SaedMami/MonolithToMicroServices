@@ -1,0 +1,174 @@
+{
+	"info": {
+		"_postman_id": "82edfc59-92aa-4367-aea4-b274c1992c7d",
+		"name": "user-service",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "public",
+			"item": [
+				{
+					"name": "root",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/v0/",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v0",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/v0/id get user",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/v0/saed.mami@gmail.com",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v0",
+								"saed.mami@gmail.com"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/v0/auth/ create user",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/v0/auth/login login success",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"saed.mami@gmail.com\",\r\n    \"password\": \"password\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/v0/auth/login",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v0",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/v0/auth/login login failure",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"garbage@gmail.com\",\r\n    \"password\": \"garbage\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/v0/auth/login",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v0",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "unauthorized",
+			"item": [
+				{
+					"name": "/v0/auth/verification verification",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/v0/auth/verification",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"v0",
+								"auth",
+								"verification"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "f44930df-da47-4268-947c-cbf95cd27e99",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "66ac864c-4825-46e1-8b83-80e72d60fef5",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "26af68b3-63ca-4775-b7a8-319ce62d69f4",
+			"key": "host",
+			"value": "172.0.0.1",
+			"type": "string"
+		}
+	],
+	"protocolProfileBehavior": {}
+}
