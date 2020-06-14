@@ -20,6 +20,8 @@ ENV AWS_BUCKET=$AWS_BUCKET
 ENV URL=$URL
 ENV JWT_SECRET=$JWT_SECRET
 
+ENV TEST=test
+
 WORKDIR /user/src/app
 
 COPY package*.json ./
