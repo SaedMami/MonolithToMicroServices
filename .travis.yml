@@ -18,6 +18,7 @@ script:
   - docker build -t udagram-api --build-arg POSTGRES_USERNAME="$POSTGRES_USERNAME" --build-arg POSTGRES_PASSWORD="$POSTGRES_PASSWORD" --build-arg POSTGRES_DB="$POSTGRES_DB" --build-arg POSTGRES_HOST="$POSTGRES_HOST" --build-arg AWS_REGION="$AWS_REGION" --build-arg AWS_PROFILE="$AWS_PROFILE" --build-arg AWS_BUCKET="$AWS_BUCKET" --build-arg URL="$URL" --build-arg JWT_SECRET="$JWT_SECRET"  ./Monolith/udagram-api/
   - docker tag udagram-api smami/udagram-api:"$TRAVIS_BRANCH"
   - docker build -t udagram-reverse-proxy ./Microservices/reverse-proxy/
+  - docker tag udagram-reverse-proxy smami/udagram-reverse-proxy:"$TRAVIS_BRANCH"
 
 after_success:
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
