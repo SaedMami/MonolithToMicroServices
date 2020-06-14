@@ -8,6 +8,7 @@ services:
 # Pre-testing installs
 install:
   - echo "nothing needs to be installed"
+  - echo "$POSTGRES_USERNAME"
 
 # Scripts to be run such as tests
 before_script:
