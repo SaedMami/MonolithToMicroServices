@@ -6,7 +6,7 @@ spec:
   selector:
     matchLabels:
       run: udagram-reverse-proxy
-  replicas: 2
+  replicas: 1
   template:
     metadata:
       labels:
