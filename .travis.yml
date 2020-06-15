@@ -12,6 +12,12 @@ install:
   - sudo mv ./kubectl /usr/local/bin/kubectl
   - mkdir ${HOME}/.kube
   - echo "$KUBE_CONFIG" | base64 --decode > ${HOME}/.kube/config
+  - 'curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"'
+  - "unzip awscli-bundle.zip"
+  - "./awscli-bundle/install -b ~/bin/aws"
+  - "export PATH=~/bin:$PATH"
+  - mkdir ${HOME}/.aws/config
+  - echo "$AWS_CONFIG" | base64 --decode > ${HOME}/.aws/config
 
 # Scripts to be run such as tests
 before_script:
