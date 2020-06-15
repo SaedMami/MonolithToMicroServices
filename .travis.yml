@@ -16,7 +16,7 @@ install:
   - "unzip awscli-bundle.zip"
   - "./awscli-bundle/install -b ~/bin/aws"
   - "export PATH=~/bin:$PATH"
-  - mkdir ${HOME}/.aws/config
+  - mkdir ${HOME}/.aws
   - echo "$AWS_CONFIG" | base64 --decode > ${HOME}/.aws/config
 
 # Scripts to be run such as tests
