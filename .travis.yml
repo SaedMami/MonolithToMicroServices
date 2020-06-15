@@ -7,13 +7,18 @@ services:
 
 # Pre-testing installs
 install:
-  - echo "nothing needs to be installed"
+  - curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
+  - chmod +x ./kubectl
+  - sudo mv ./kubectl /usr/local/bin/kubectl
+  - mkdir ${HOME}/.kube
+  - echo "$KUBE_CONFIG" | base64 --decode > ${HOME}/.kube/config
 
 # Scripts to be run such as tests
 before_script:
   - echo "no tests"
 
 script:
+  - kubectl get pods
   - docker --version # print the version for logging
   - docker build -t udagram-api --build-arg POSTGRES_USERNAME="$POSTGRES_USERNAME" --build-arg POSTGRES_PASSWORD="$POSTGRES_PASSWORD" --build-arg POSTGRES_DB="$POSTGRES_DB" --build-arg POSTGRES_HOST="$POSTGRES_HOST" --build-arg AWS_REGION="$AWS_REGION" --build-arg AWS_PROFILE="$AWS_PROFILE" --build-arg AWS_BUCKET="$AWS_BUCKET" --build-arg URL="$URL" --build-arg JWT_SECRET="$JWT_SECRET"  ./Monolith/udagram-api/
   - docker tag udagram-api smami/udagram-api:latest
