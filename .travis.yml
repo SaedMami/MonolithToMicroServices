@@ -18,6 +18,7 @@ install:
   - "export PATH=~/bin:$PATH"
   - mkdir ${HOME}/.aws
   - echo "$AWS_CONFIG" | base64 --decode > ${HOME}/.aws/config
+  - echo "$AWS_CRED" | base64 --decode > ${HOME}/.aws/credentials
 
 # Scripts to be run such as tests
 before_script:
