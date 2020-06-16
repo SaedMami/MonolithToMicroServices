@@ -31,10 +31,14 @@ script:
   - docker tag udagram-api smami/udagram-api:latest
   - docker build -t udagram-reverse-proxy ./Microservices/reverse-proxy/
   - docker tag udagram-reverse-proxy smami/udagram-reverse-proxy:latest
+  - docker build -t udagram-frontend ./Microservices/udagram-frontend/
+  - docker tag udagram-frontend smami/udagram-frontend:latest
 
 after_success:
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
   - docker push smami/udagram-api
   - docker push smami/udagram-reverse-proxy
+  - docker push smami/udagram-frontend
   - kubectl patch deployment udagram-api -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"date\":\"`date +'%s'`\"}}}}}"
   - kubectl patch deployment udagram-reverse-proxy -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"date\":\"`date +'%s'`\"}}}}}"
+  #- kubectl patch deployment udagram-frontend -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"date\":\"`date +'%s'`\"}}}}}"
