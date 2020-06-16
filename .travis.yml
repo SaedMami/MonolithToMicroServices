@@ -1,0 +1,44 @@
+language: node_js
+node_js:
+  - 13
+
+services:
+  - docker
+
+# Pre-testing installs
+install:
+  - curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
+  - chmod +x ./kubectl
+  - sudo mv ./kubectl /usr/local/bin/kubectl
+  - mkdir ${HOME}/.kube
+  - echo "$KUBE_CONFIG" | base64 --decode > ${HOME}/.kube/config
+  - 'curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"'
+  - "unzip awscli-bundle.zip"
+  - "./awscli-bundle/install -b ~/bin/aws"
+  - "export PATH=~/bin:$PATH"
+  - mkdir ${HOME}/.aws
+  - echo "$AWS_CONFIG" | base64 --decode > ${HOME}/.aws/config
+  - echo "$AWS_CRED" | base64 --decode > ${HOME}/.aws/credentials
+
+# Scripts to be run such as tests
+before_script:
+  - echo "no tests"
+
+script:
+  - kubectl get pods
+  - docker --version # print the version for logging
+  - docker build -t udagram-api --build-arg POSTGRES_USERNAME="$POSTGRES_USERNAME" --build-arg POSTGRES_PASSWORD="$POSTGRES_PASSWORD" --build-arg POSTGRES_DB="$POSTGRES_DB" --build-arg POSTGRES_HOST="$POSTGRES_HOST" --build-arg AWS_REGION="$AWS_REGION" --build-arg AWS_PROFILE="$AWS_PROFILE" --build-arg AWS_BUCKET="$AWS_BUCKET" --build-arg URL="$URL" --build-arg JWT_SECRET="$JWT_SECRET"  ./Monolith/udagram-api/
+  - docker tag udagram-api smami/udagram-api:latest
+  - docker build -t udagram-reverse-proxy ./Microservices/reverse-proxy/
+  - docker tag udagram-reverse-proxy smami/udagram-reverse-proxy:latest
+  - docker build -t udagram-frontend ./Microservices/udagram-frontend/
+  - docker tag udagram-frontend smami/udagram-frontend:latest
+
+after_success:
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - docker push smami/udagram-api
+  - docker push smami/udagram-reverse-proxy
+  - docker push smami/udagram-frontend
+  - kubectl patch deployment udagram-api -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"date\":\"`date +'%s'`\"}}}}}"
+  - kubectl patch deployment udagram-reverse-proxy -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"date\":\"`date +'%s'`\"}}}}}"
+  - kubectl patch deployment udagram-frontend -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"date\":\"`date +'%s'`\"}}}}}"
