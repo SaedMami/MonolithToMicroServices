@@ -41,4 +41,4 @@ after_success:
   - docker push smami/udagram-frontend
   - kubectl patch deployment udagram-api -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"date\":\"`date +'%s'`\"}}}}}"
   - kubectl patch deployment udagram-reverse-proxy -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"date\":\"`date +'%s'`\"}}}}}"
-  #- kubectl patch deployment udagram-frontend -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"date\":\"`date +'%s'`\"}}}}}"
+  - kubectl patch deployment udagram-frontend -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"date\":\"`date +'%s'`\"}}}}}"
