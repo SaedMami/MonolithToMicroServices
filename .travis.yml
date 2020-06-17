@@ -31,7 +31,7 @@ script:
   - docker tag udagram-api smami/udagram-api:latest
   - docker build -t udagram-reverse-proxy ./Microservices/reverse-proxy/
   - docker tag udagram-reverse-proxy smami/udagram-reverse-proxy:latest
-  - docker build -t udagram-user-service --build-arg POSTGRES_USERNAME="$POSTGRES_USERNAME" --build-arg POSTGRES_PASSWORD="$POSTGRES_PASSWORD" --build-arg POSTGRES_DB="$POSTGRES_DB" --build-arg POSTGRES_HOST="$POSTGRES_HOST" --build-arg URL="$URL" --build-arg JWT_SECRET="$JWT_SECRET"  ./Monolith/user-service/
+  - docker build -t udagram-user-service --build-arg POSTGRES_USERNAME="$POSTGRES_USERNAME" --build-arg POSTGRES_PASSWORD="$POSTGRES_PASSWORD" --build-arg POSTGRES_DB="$POSTGRES_DB" --build-arg POSTGRES_HOST="$POSTGRES_HOST" --build-arg URL="$URL" --build-arg JWT_SECRET="$JWT_SECRET"  ./Microservices/user-service/
   - docker tag udagram-user-service smami/udagram-user-service:latest
   #- docker build -t udagram-frontend ./Microservices/udagram-frontend/
   #- docker tag udagram-frontend smami/udagram-frontend:latest
