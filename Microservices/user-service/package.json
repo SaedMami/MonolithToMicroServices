@@ -1,7 +1,7 @@
 {
-  "name": "user_service",
-  "version": "1.0.0",
-  "description": "microservice for user authorization and authentication",
+  "name": "udagram-user-service",
+  "version": "2.0.0",
+  "description": "",
   "main": "src/server.js",
   "scripts": {
     "start": "node .",
@@ -12,6 +12,7 @@
     "build": "npm run clean && tsc && cp -rf src/config www/config && cp .npmrc www/.npmrc && cp package.json www/package.json && cd www && 7z -a -r Archive.zip . && cd ..",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "keywords": [],
   "author": "Saed Mami",
   "license": "ISC",
   "dependencies": {
