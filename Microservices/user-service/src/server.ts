@@ -1,16 +1,14 @@
-import cors from "cors";
 import express from "express";
-import { sequelize } from "./sequelize";
-
-import { IndexRouter } from "./controllers/v0/index.router";
-
 import bodyParser from "body-parser";
+import { User } from "./v0/model/User";
 import { config } from "./config/config";
-import { V0_FEED_MODELS } from "./controllers/v0/model.index";
+import { UserRouter } from "./v0/router/user.router";
+import cors from "cors";
 
 (async () => {
-  await sequelize.addModels(V0_FEED_MODELS);
-  await sequelize.sync();
+  const userModel = [User];
+  config.sequelize.addModels(userModel);
+  await config.sequelize.sync();
 
   const app = express();
   const port = process.env.PORT || 8080;
@@ -32,16 +30,16 @@ import { V0_FEED_MODELS } from "./controllers/v0/model.index";
     })
   );
 
-  app.use("/v0/", IndexRouter);
-
   // Root URI call
   app.get("/", async (req, res) => {
-    res.send("/v0/");
+    res.send("/v0");
   });
+
+  app.use("/v0", UserRouter);
 
   // Start the Server
   app.listen(port, () => {
-    console.log(`server running ${config.url}`);
+    console.log(`server running`);
     console.log(`press CTRL+C to stop server`);
   });
 })();

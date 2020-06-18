@@ -36,6 +36,7 @@ router.get("/", async (req: Request, res: Response) => {
       item.url = AWS.getGetSignedUrl(item.url);
     }
   });
+  console.log(req.headers);
   res.send(items);
 });
 
