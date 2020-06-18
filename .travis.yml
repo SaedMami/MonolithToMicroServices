@@ -27,22 +27,22 @@ before_script:
 script:
   - kubectl get pods
   - docker --version # print the version for logging
-  #- docker build -t udagram-reverse-proxy ./Microservices/reverse-proxy/
-  #- docker tag udagram-reverse-proxy smami/udagram-reverse-proxy:latest
-  #- docker build -t udagram-user-service --build-arg POSTGRES_USERNAME="$POSTGRES_USERNAME" --build-arg POSTGRES_PASSWORD="$POSTGRES_PASSWORD" --build-arg POSTGRES_DB="$POSTGRES_DB" --build-arg POSTGRES_HOST="$POSTGRES_HOST" --build-arg URL="$URL" --build-arg JWT_SECRET="$JWT_SECRET"  ./Microservices/user-service/
-  #- docker tag udagram-user-service smami/udagram-user-service:latest
-  #- docker build -t udagram-feed-service --build-arg AWS_REGION="$AWS_REGION" --build-arg AWS_PROFILE="$AWS_PROFILE" --build-arg AWS_BUCKET="$AWS_BUCKET" --build-arg POSTGRES_USERNAME="$POSTGRES_USERNAME" --build-arg POSTGRES_PASSWORD="$POSTGRES_PASSWORD" --build-arg POSTGRES_DB="$POSTGRES_DB" --build-arg POSTGRES_HOST="$POSTGRES_HOST" --build-arg URL="$URL" --build-arg JWT_SECRET="$JWT_SECRET"  ./Microservices/feed-service/
-  #- docker tag udagram-feed-service smami/udagram-feed-service:latest
+  - docker build -t udagram-reverse-proxy ./Microservices/reverse-proxy/
+  - docker tag udagram-reverse-proxy smami/udagram-reverse-proxy:latest
+  - docker build -t udagram-user-service --build-arg POSTGRES_USERNAME="$POSTGRES_USERNAME" --build-arg POSTGRES_PASSWORD="$POSTGRES_PASSWORD" --build-arg POSTGRES_DB="$POSTGRES_DB" --build-arg POSTGRES_HOST="$POSTGRES_HOST" --build-arg URL="$URL" --build-arg JWT_SECRET="$JWT_SECRET"  ./Microservices/user-service/
+  - docker tag udagram-user-service smami/udagram-user-service:latest
+  - docker build -t udagram-feed-service --build-arg AWS_REGION="$AWS_REGION" --build-arg AWS_PROFILE="$AWS_PROFILE" --build-arg AWS_BUCKET="$AWS_BUCKET" --build-arg POSTGRES_USERNAME="$POSTGRES_USERNAME" --build-arg POSTGRES_PASSWORD="$POSTGRES_PASSWORD" --build-arg POSTGRES_DB="$POSTGRES_DB" --build-arg POSTGRES_HOST="$POSTGRES_HOST" --build-arg URL="$URL" --build-arg JWT_SECRET="$JWT_SECRET"  ./Microservices/feed-service/
+  - docker tag udagram-feed-service smami/udagram-feed-service:latest
   - docker build -t udagram-frontend ./Microservices/udagram-frontend/
   - docker tag udagram-frontend smami/udagram-frontend:latest
 
 after_success:
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-  #- docker push smami/udagram-reverse-proxy
-  #- docker push smami/udagram-user-service
+  - docker push smami/udagram-reverse-proxy
+  - docker push smami/udagram-user-service
   - docker push smami/udagram-frontend
-  #- docker push smami/udagram-feed-service
-  #- kubectl patch deployment udagram-reverse-proxy -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"date\":\"`date +'%s'`\"}}}}}"
+  - docker push smami/udagram-feed-service
+  - kubectl patch deployment udagram-reverse-proxy -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"date\":\"`date +'%s'`\"}}}}}"
   - kubectl patch deployment udagram-frontend -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"date\":\"`date +'%s'`\"}}}}}"
-  #- kubectl patch deployment udagram-user-service -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"date\":\"`date +'%s'`\"}}}}}"
-  #- kubectl patch deployment udagram-feed-service -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"date\":\"`date +'%s'`\"}}}}}"
+  - kubectl patch deployment udagram-user-service -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"date\":\"`date +'%s'`\"}}}}}"
+  - kubectl patch deployment udagram-feed-service -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"date\":\"`date +'%s'`\"}}}}}"
