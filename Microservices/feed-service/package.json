@@ -20,7 +20,7 @@
     "aws-sdk": "^2.699.0",
     "body-parser": "^1.18.3",
     "cors": "^2.8.5",
-    "express": "^4.16.4",
+    "express": "^4.17.3",
     "jsonwebtoken": "^8.5.1",
     "pg": "^7.9.0",
     "reflect-metadata": "^0.1.13",
